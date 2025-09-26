@@ -17,6 +17,8 @@
             <p><strong>Waktu:</strong> 7:30 pagi - 1:00 petang</p>
         </div>
         
+        <p class="terhad-notice"><strong>Perhatian:</strong> Tempat adalah terhad dan penyertaan dihadkan kepada 12 lelaki & 8 perempuan.</p>
+        
         <form name="submit-to-google-sheet" id="pendaftaran-form" class="registration-form">
             <h3>Borang Pendaftaran</h3>
             <div class="form-group">
@@ -27,38 +29,58 @@
                 <label for="umur">Umur:</label>
                 <input type="number" id="umur" name="umur" required>
             </div>
+            
+            <div class="form-group">
+                <label>Jantina:</label>
+                <div class="radio-group">
+                    <input type="radio" id="lelaki" name="jantina" value="Lelaki" required>
+                    <label for="lelaki">Lelaki</label>
+                    <input type="radio" id="perempuan" name="jantina" value="Perempuan">
+                    <label for="perempuan">Perempuan</label>
+                </div>
+            </div>
+            
             <div class="form-group">
                 <label for="telefon">No. Telefon:</label>
                 <input type="tel" id="telefon" name="telefon" required>
             </div>
             <div class="form-group waiver">
-                <input type="checkbox" id="waiver" name="waiver" required>
+                <input type="checkbox" id="waiver" name="waiver" value="Setuju" required>
                 <label for="waiver">Saya dengan ini mengesahkan bahawa saya mengambil bahagian dalam acara ini atas risiko saya sendiri dan saya tidak akan mempertanggungjawabkan pihak penganjur terhadap sebarang kecederaan, kemalangan, atau kerugian yang mungkin berlaku semasa atau akibat daripada penyertaan saya.</label>
             </div>
             <button type="submit">Hantar</button>
         </form>
-        <p id="status-mesej" style="text-align: center; margin-top: 20px;"></p>
+        <p id="status-mesej" style="text-align: center; margin-top: 20px; font-weight: bold;"></p>
     </div>
 
     <script>
-        // URL ANDA TELAH DIMASUKKAN DI SINI
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwbPGLh1Kqc8yjYsqO1v8M2DXWdZBllpStB9pgqceRicVgsQ_23-miOrlIw6VJM_m8h/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwbPGLh1Kqc8yjYsqO1v8M2DXWdZBllpStB9pgqceRicVgsQ_23-miOrlIw6VJM_m8h/exec'; // URL ANDA
         const form = document.forms['submit-to-google-sheet'];
         const statusMesej = document.getElementById('status-mesej');
 
         form.addEventListener('submit', e => {
-            e.preventDefault(); // Menghalang borang daripada refresh halaman
+            e.preventDefault();
             statusMesej.textContent = 'Menghantar...';
             
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(response => {
-                    console.log('Success!', response);
-                    statusMesej.textContent = 'Terima kasih! Pendaftaran anda telah berjaya dihantar.';
-                    form.reset(); // Kosongkan borang selepas berjaya dihantar
-                    setTimeout(() => { statusMesej.textContent = ''; }, 5000); // Padam mesej selepas 5 saat
+                .then(response => response.json()) 
+                .then(data => {
+                    console.log('Success!', data);
+                    if (data.result === 'success') {
+                        statusMesej.style.color = 'green';
+                        statusMesej.textContent = 'Terima kasih! Pendaftaran anda telah berjaya dihantar.';
+                        form.reset();
+                    } else if (data.result === 'quota_penuh') {
+                        statusMesej.style.color = 'red';
+                        statusMesej.textContent = data.message;
+                    } else {
+                        throw new Error('Ralat tidak diketahui dari skrip');
+                    }
+                    setTimeout(() => { statusMesej.textContent = ''; }, 6000);
                 })
                 .catch(error => {
                     console.error('Error!', error.message);
+                    statusMesej.style.color = 'red';
                     statusMesej.textContent = 'Maaf, berlaku ralat. Sila cuba lagi.';
                 });
         });
