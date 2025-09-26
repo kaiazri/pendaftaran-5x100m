@@ -1,3 +1,4 @@
+/* Tetapan Asas Body */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -7,15 +8,17 @@ body {
     padding: 20px;
 }
 
+/* Bekas Utama (Container) */
 .container {
     max-width: 600px;
     margin: 0 auto;
     background: #fff;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Bahagian Header */
 .header {
     text-align: center;
     margin-bottom: 20px;
@@ -26,13 +29,16 @@ body {
 .header h1 {
     color: #0056b3;
     margin: 0;
+    font-size: 1.5em;
 }
 
 .header h2 {
     color: #555;
     margin: 10px 0 0;
+    font-size: 1.2em;
 }
 
+/* Bahagian Info Acara */
 .info {
     text-align: center;
     margin-bottom: 30px;
@@ -43,6 +49,7 @@ body {
     margin: 5px 0;
 }
 
+/* Borang Pendaftaran */
 .registration-form h3 {
     text-align: center;
     color: #333;
@@ -56,6 +63,7 @@ body {
 .form-group label {
     display: block;
     margin-bottom: 5px;
+    font-weight: bold;
 }
 
 .form-group input[type="text"],
@@ -65,9 +73,27 @@ body {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    box-sizing: border-box;
+    box-sizing: border-box; /* Memastikan padding tidak mengubah saiz lebar */
 }
 
+/* Gaya untuk Pilihan Jantina (Butang Radio) */
+.radio-group {
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+.radio-group label {
+    margin-right: 20px;
+    margin-bottom: 0; /* Mengatasi margin-bottom dari .form-group label */
+    font-weight: normal; /* Menjadikan label radio tidak tebal */
+}
+
+/* Gaya untuk Bahagian Waiver */
 .form-group.waiver {
     display: flex;
     align-items: flex-start;
@@ -76,14 +102,18 @@ body {
 .form-group.waiver input[type="checkbox"] {
     margin-right: 10px;
     margin-top: 5px;
+    width: 18px; /* Menetapkan saiz checkbox */
+    height: 18px;
 }
 
 .form-group.waiver label {
     flex: 1;
     font-size: 0.9em;
     color: #666;
+    font-weight: normal;
 }
 
+/* Butang Hantar */
 button {
     display: block;
     width: 100%;
@@ -99,4 +129,24 @@ button {
 
 button:hover {
     background-color: #004494;
+}
+
+/* Mesej Status (Berjaya/Gagal/Kuota Penuh) */
+#status-mesej {
+    text-align: center;
+    margin-top: 20px;
+    font-weight: bold;
+    min-height: 1.2em; /* Memberi ruang supaya borang tidak 'melompat' */
+}
+
+/* Notis Tempat Terhad */
+.terhad-notice {
+    text-align: center;
+    font-weight: bold;
+    color: #c0392b; /* Warna merah gelap untuk penekanan */
+    background-color: #fbeee6; /* Latar belakang lembut */
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 25px;
+    border: 1px solid #e5a086;
 }
